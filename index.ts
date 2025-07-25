@@ -16,38 +16,10 @@ export function createEasterEgg(
   // 1. 키 시퀀스를 Base64로 인코딩하여 유추하기 어렵게 만듭니다.
   const obfuscatedSequence = btoa(JSON.stringify(keySequence));
 
-  // 2. 디버거 탐지 함수
-  const checkDebugger = () => {
-    const threshold = 170; // 개발자 도구 창 크기 임계값
-    if (
-      window.outerWidth - window.innerWidth > threshold ||
-      window.outerHeight - window.innerHeight > threshold
-    ) {
-      // 디버거가 열려있으면 시퀀스를 초기화하고 동작을 멈춥니다.
-      currentSequence = [];
-      return true;
-    }
-    return false;
-  };
-
-  // 오해를 유도하는 콘솔 메시지
-  (function () {
-    try {
-      const re = /./;
-      re.toString = function () {
-        console.log(
-          "%cHehe, you found me! But can you figure out the secret code?",
-          "color: #9A2EFE; font-size: 14px; font-weight: bold;"
-        );
-        return " ";
-      };
-      console.log("%c ", re);
-    } catch (e) {}
-  })();
   targetElement.addEventListener("keydown", (event: KeyboardEvent) => {
-    // 매 키 입력마다 디버거를 확인합니다.
-
-    if (checkDebugger()) {
+    // 개발자 도구가 열려있으면 이스터에그 동작을 중단합니다.
+    if (detectDebuggerByBlocking()) {
+      currentSequence = [];
       return;
     }
 
@@ -75,3 +47,14 @@ export function createEasterEgg(
     }
   });
 }
+const detectDebuggerByBlocking = () => {
+  let detected = false;
+  const start = performance.now();
+  debugger; // 개발자 도구가 열려있다면 멈춤
+  const end = performance.now();
+  if (end - start > 100) {
+    detected = true;
+    console.warn("🛑 Debugger Detected!");
+  }
+  return detected;
+};

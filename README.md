@@ -1,5 +1,10 @@
 # Easter Egg Library
 
+[![npm version](https://img.shields.io/npm/v/@uiwwsw/easter-egg.svg)](https://www.npmjs.com/package/@uiwwsw/easter-egg)
+[![Publish](https://github.com/uiwwsw/easter-egg/actions/workflows/publish.yml/badge.svg)](https://github.com/uiwwsw/easter-egg/actions/workflows/publish.yml)
+[![License](https://img.shields.io/github/license/uiwwsw/easter-egg)](https://github.com/uiwwsw/easter-egg/blob/main/LICENSE)
+[![Stars](https://img.shields.io/github/stars/uiwwsw/easter-egg?style=flat)](https://github.com/uiwwsw/easter-egg/stargazers)
+
 A simple JavaScript/TypeScript library to add an easter egg (Konami Code) to your web applications.
 
 ## Features

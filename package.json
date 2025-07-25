@@ -1,18 +1,33 @@
 {
   "name": "easter-egg",
+  "description": "A revolutionary virtual keyboard solution for React that solves the Korean `composition`",,
+  "version": "0.1.0",
   "module": "index.ts",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "private": false,
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "easter-egg",
+    "hidden",
+    "surprise",
+    "fun"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "tsc --emitDeclarationOnly --declaration --outDir dist index.ts && bun build ./index.ts --outdir ./dist --target browser",
     "dev": "bun --watch server.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
+    "@types/bun": "latest",
     "typescript": "^5"
   }
 }
