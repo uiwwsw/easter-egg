@@ -1,6 +1,5 @@
 {
-  "name": "easter-egg",
-  "description": "A revolutionary virtual keyboard solution for React that solves the Korean `composition`",,
+  "name": "@uiwwsw/easter-egg",
   "version": "0.1.0",
   "module": "index.ts",
   "type": "module",
