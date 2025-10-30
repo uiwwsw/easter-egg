@@ -17,11 +17,8 @@ export function createEasterEgg(
   const obfuscatedSequence = btoa(JSON.stringify(keySequence));
 
   targetElement.addEventListener("keydown", (event: KeyboardEvent) => {
-    // 개발자 도구가 열려있으면 이스터에그 동작을 중단합니다.
-    if (detectDebuggerByBlocking()) {
-      currentSequence = [];
-      return;
-    }
+    // 개발자 도구가 열려있으면 경고만 표시하고 기능은 계속 동작하게 합니다.
+    warnDebuggerIfDetected();
 
     const decodedSequence: string[] = JSON.parse(atob(obfuscatedSequence));
     const requiredKey = decodedSequence[currentSequence.length];
@@ -47,14 +44,29 @@ export function createEasterEgg(
     }
   });
 }
-const detectDebuggerByBlocking = () => {
-  let detected = false;
-  const start = performance.now();
-  debugger; // 개발자 도구가 열려있다면 멈춤
-  const end = performance.now();
-  if (end - start > 100) {
-    detected = true;
-    console.warn("🛑 Debugger Detected!");
-  }
-  return detected;
-};
+const warnDebuggerIfDetected = (() => {
+  let hasWarned = false;
+
+  return () => {
+    if (hasWarned) {
+      return false;
+    }
+
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    const threshold = 160;
+    const widthDiff = Math.abs(window.outerWidth - window.innerWidth);
+    const heightDiff = Math.abs(window.outerHeight - window.innerHeight);
+    const detected = widthDiff > threshold || heightDiff > threshold;
+
+    if (detected) {
+      hasWarned = true;
+      console.warn("🛑 Debugger Detected! Easter egg functionality will continue but debugger may impact timing.");
+      return true;
+    }
+
+    return false;
+  };
+})();
