@@ -9,7 +9,7 @@ A simple JavaScript/TypeScript library to add an easter egg (Konami Code) to you
 
 ## Features
 
-- Detects a custom key sequence (default: Konami Code).
+- Detects custom keyboard and pointer event sequences (default: Konami Code).
 - Executes a callback function upon successful sequence entry.
 - Basic debugger detection and code obfuscation for fun.
 
@@ -32,13 +32,42 @@ bun add @uiwwsw/easter-egg
 import { createEasterEgg } from '@uiwwsw/easter-egg';
 
 createEasterEgg(
-  document.body, // The element to listen for key events
+  document.body, // The element to listen for keyboard/pointer events
   () => {
     alert('Easter Egg Triggered!');
     // Your custom easter egg logic here
   },
-  ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'] // Konami Code
+  [
+    'keyboard:ArrowUp',
+    'keyboard:ArrowUp',
+    'keyboard:ArrowDown',
+    'keyboard:ArrowDown',
+    'keyboard:ArrowLeft',
+    'keyboard:ArrowRight',
+    'keyboard:ArrowLeft',
+    'keyboard:ArrowRight',
+    'keyboard:b',
+    'keyboard:a',
+  ] // Konami Code
 );
+```
+
+Each entry in the array follows the format `<type>:<value>`:
+
+- `keyboard:<event.key>` listens for keyboard events fired on `keydown`.
+- `pointer:<event.type>` listens for pointer/mouse interactions such as `click`, `pointerdown`, or `dblclick`.
+
+Need mouse interactions too? Mix and match both types:
+
+```typescript
+createEasterEgg(document.body, () => {
+  console.log('Keyboard and pointer combo unlocked!');
+}, [
+  'keyboard:Shift',
+  'pointer:click',
+  'pointer:click',
+  'keyboard:Enter',
+]);
 ```
 
 ### In your HTML (for demo/direct use)
@@ -54,7 +83,18 @@ As demonstrated in `index.html`:
     () => {
       alert('Easter Egg Triggered!');
     },
-    ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
+    [
+      'keyboard:ArrowUp',
+      'keyboard:ArrowUp',
+      'keyboard:ArrowDown',
+      'keyboard:ArrowDown',
+      'keyboard:ArrowLeft',
+      'keyboard:ArrowRight',
+      'keyboard:ArrowLeft',
+      'keyboard:ArrowRight',
+      'keyboard:b',
+      'keyboard:a'
+    ]
   );
 </script>
 ```
