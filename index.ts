@@ -1,4 +1,6 @@
 /// <reference lib="dom" />
+const listenerRegistry = new WeakMap<HTMLElement, Map<string, (event: KeyboardEvent) => void>>();
+
 /**
  * 지정된 키 시퀀스가 순서대로 입력되면 콜백 함수를 실행하는 이스터에그를 설정합니다.
  * 이 버전은 디버거 탐지 및 코드 난독화 기능이 포함되어 있습니다.
@@ -15,8 +17,21 @@ export function createEasterEgg(
 
   // 1. 키 시퀀스를 Base64로 인코딩하여 유추하기 어렵게 만듭니다.
   const obfuscatedSequence = btoa(JSON.stringify(keySequence));
+  const sequenceKey = obfuscatedSequence;
 
-  targetElement.addEventListener("keydown", (event: KeyboardEvent) => {
+  const existingRegistry = listenerRegistry.get(targetElement);
+  const listenerMap = existingRegistry ?? new Map<string, (event: KeyboardEvent) => void>();
+
+  if (!existingRegistry) {
+    listenerRegistry.set(targetElement, listenerMap);
+  }
+
+  const previousListener = listenerMap.get(sequenceKey);
+  if (previousListener) {
+    targetElement.removeEventListener("keydown", previousListener);
+  }
+
+  const listener = (event: KeyboardEvent) => {
     // 개발자 도구가 열려있으면 경고만 표시하고 기능은 계속 동작하게 합니다.
     warnDebuggerIfDetected();
 
@@ -42,7 +57,10 @@ export function createEasterEgg(
         currentSequence = [];
       }
     }
-  });
+  };
+
+  listenerMap.set(sequenceKey, listener);
+  targetElement.addEventListener("keydown", listener);
 }
 const warnDebuggerIfDetected = (() => {
   let hasWarned = false;
