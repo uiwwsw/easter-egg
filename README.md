@@ -18,10 +18,10 @@ A simple JavaScript/TypeScript library to add an easter egg (Konami Code) to you
 To use this library in your project, you can install it via Bun:
 
 ```bash
-bun add easter-egg
+bun add @uiwwsw/easter-egg
 # Or if you're using npm/yarn
-# npm install easter-egg
-# yarn add easter-egg
+# npm install @uiwwsw/easter-egg
+# yarn add @uiwwsw/easter-egg
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ bun add easter-egg
 ### In your JavaScript/TypeScript project
 
 ```typescript
-import { createEasterEgg } from 'easter-egg';
+import { createEasterEgg } from '@uiwwsw/easter-egg';
 
 createEasterEgg(
   document.body, // The element to listen for key events
