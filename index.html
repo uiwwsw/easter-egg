@@ -45,7 +45,8 @@
       <p>
         Press the konami code (<kbd>↑</kbd> <kbd>↑</kbd> <kbd>↓</kbd>
         <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> <kbd>←</kbd> <kbd>→</kbd>
-        <kbd>B</kbd> <kbd>A</kbd>) to trigger the easter egg!
+        <kbd>B</kbd> <kbd>A</kbd>) or mix in mouse clicks to trigger the
+        easter egg!
       </p>
     </div>
     <script type="module">
@@ -56,7 +57,18 @@
         () => {
           alert('Easter Egg Triggered!');
         },
-        ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
+        [
+          'keyboard:ArrowUp',
+          'keyboard:ArrowUp',
+          'keyboard:ArrowDown',
+          'keyboard:ArrowDown',
+          'keyboard:ArrowLeft',
+          'keyboard:ArrowRight',
+          'keyboard:ArrowLeft',
+          'keyboard:ArrowRight',
+          'keyboard:b',
+          'keyboard:a'
+        ]
       );
     </script>
   </body>

@@ -1,6 +1,6 @@
 {
   "name": "@uiwwsw/easter-egg",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "module": "index.ts",
   "type": "module",
   "main": "./dist/index.js",
